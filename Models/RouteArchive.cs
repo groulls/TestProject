@@ -7,7 +7,7 @@ namespace TEST.Models
 {
     public class RouteArchive
     {
-        int RouteArchive_PK_ID { get; set; }
+        int RouteArchiveID { get; set; }
         int UserID_FK { get; set; }
         string RouteName { get; set; }
         DateTime dateTime { get; set; }
