@@ -31,6 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200415164649_initial.cs" />
+    <Compile Remove="Data\Migrations\20200415164649_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\components\img\" />
   </ItemGroup>
 

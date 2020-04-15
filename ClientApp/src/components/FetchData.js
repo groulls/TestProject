@@ -19,7 +19,6 @@ export class FetchData extends Component {
                 <thead>
                     <tr>
                         <th>Наименование маршрута</th>
-                        <th>Длина маршрута</th>
                         <th>Дата начала</th>
                         <th>Время движения</th>
                         <th>Комментарии</th>
@@ -43,7 +42,7 @@ export class FetchData extends Component {
         let contents = this.state.loading
             ? <p><em>Загрузка...</em></p>
             : FetchData.renderForecastsTable(this.state.forecasts);
-
+        
         return (
             <div>
                 <h1 id="tabelLabel" >Маршруты:</h1>

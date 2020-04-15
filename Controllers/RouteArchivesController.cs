@@ -21,7 +21,40 @@ namespace TEST.Controllers
             _context = context;
         }
 
-       
+        [HttpGet]
+        public IEnumerable<RouteArchive> getlist()
+        {
+            return _context.RouteArchive.ToList();
+        }
+        [HttpGet("{id}")]
+
+        public RouteArchive getOne(int id)
+        {
+            if (RouteArchiveExists(id))
+            {
+                return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+       [HttpPost("add")]
+
+       public RouteArchive Add(RouteArchive model)
+        {
+            if(model.RouteName != "")
+            {
+                _context.RouteArchive.Add(model);
+                _context.SaveChangesAsync();
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         private bool RouteArchiveExists(int id)
         {
