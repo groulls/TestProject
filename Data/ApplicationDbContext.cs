@@ -17,5 +17,6 @@ namespace TEST.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<TEST.Models.RouteArchive> RouteArchive { get; set; }
     }
 }
