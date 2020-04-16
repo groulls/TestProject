@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TEST.Data;
@@ -10,8 +9,8 @@ using TEST.Models;
 
 namespace TEST.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class RouteArchivesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -22,12 +21,13 @@ namespace TEST.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<RouteArchive> getlist()
+        public async Task<ActionResult<IEnumerable<RouteArchive>>> GetRouteArchive()
         {
-            return _context.RouteArchive.ToList();
+            var list = await _context.RouteArchive.ToListAsync();
+            return list;
         }
-        [HttpGet("{id}")]
 
+        [HttpGet("{id}")]
         public RouteArchive getOne(int id)
         {
             if (RouteArchiveExists(id))
