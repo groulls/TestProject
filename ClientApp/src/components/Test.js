@@ -23,11 +23,11 @@ export class Test extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map(data =>
-                        <tr key={data.date}>
-                            <td>{data.routename}</td>
-                            <td>{data.datetime}</td>
-                            <td>{data.routecomment}</td>
+                    {data.map(item =>
+                        <tr>
+                            <td>{item.routeName}</td>
+                            <td>{item.dateTime}</td>
+                            <td>{item.routeComment}</td>
                         </tr>
                     )}
                 </tbody>
@@ -50,7 +50,7 @@ export class Test extends Component {
 
     async populateWeatherData() {
         //const token = await authService.getAccessToken();
-        const response = await fetch('RouteArchive');
+        const response = await fetch('RouteArchives');
         const datas = await response.json();
         this.setState({ data: datas, loading: false });
     }
