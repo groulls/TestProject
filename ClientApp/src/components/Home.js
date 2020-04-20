@@ -63,8 +63,14 @@ export class Home extends Component {
         super(props);
         this.state = {
             coordinates: [],
-        };
-    }
+            data: { name: 'TEST', date: '20.04.20', comment: 'TEST' }
+        }
+
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleCommentChange = this.handleCommentChange.bind(this);
+    };
+   
 
     setYmaps = (ymaps) => {
         this.setState({ ymaps });
@@ -175,7 +181,34 @@ export class Home extends Component {
             document.getElementById("output").innerHTML =
                 "Расстояние: " + routeLength + "км.";
         }
-    };
+};
+
+    handleNameChange(event) {
+        let data = this.state.data
+        let newItem = Object.assign(data, { name: event.target.value })
+        this.setState({ data: newItem, });
+          //this.props.setNewPerson(this.state.user);
+    }
+    handleDateChange(event){
+    let data = this.state.data
+    let newItem = Object.assign(data, { date: event.target.value })
+    this.setState({ data: newItem });
+    }
+
+    handleCommentChange(event) {
+        let data = this.state.data
+        let newItem = Object.assign(data, { comment: event.target.value })
+        this.setState({ data: newItem });
+    }
+
+    async buttonClickHandler() {
+        console.log("click")
+        let data = this.state.data 
+        const response = await fetch("RouteArchives",{
+            method: 'POST',
+            body: data,
+        });
+    }
     render() {
         return (
             <div className="base_container">
@@ -187,7 +220,24 @@ export class Home extends Component {
                     <div className="length">
                         <p id="output"></p>
                     </div>
+                    <div className="route">
+
+                    </div>
+                
                 </div>
+                <form className="form">
+                    <label>Введите название маршрута:</label>
+                    <input type="text" required value={this.state.name}
+                        onChange={this.handleNameChange} />
+                    <label>Дата маршрута:</label>
+                    <input type="text" required value={this.state.date}
+                        onChange={this.handleDateChange} />
+                    <label>Примечания:</label>
+                    <input type="text" required value={this.state.comment}
+                        onChange={this.handleCommentChange}/>
+                    <button onClick={this.buttonClickHandler}>Сохранить маршрут</button>
+                </form>
+
 
                 <div className="Mappy">
                     {/* Можно прописать load: "package.full" */}
