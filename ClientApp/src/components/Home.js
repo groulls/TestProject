@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
-import './css/Home.css'
+import './css/Home.css';
+import Form from './InputBox';
+import Button from './Button';
 
 const mapState = {
     center: [55.831903, 37.411961],
@@ -63,12 +65,8 @@ export class Home extends Component {
         super(props);
         this.state = {
             coordinates: [],
-            data: { name: 'TEST', date: '20.04.20', comment: 'TEST' }
+            dates: {}
         }
-
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleCommentChange = this.handleCommentChange.bind(this);
     };
    
 
@@ -181,33 +179,26 @@ export class Home extends Component {
             document.getElementById("output").innerHTML =
                 "Расстояние: " + routeLength + "км.";
         }
-};
+    };
 
-    handleNameChange(event) {
-        let data = this.state.data
-        let newItem = Object.assign(data, { name: event.target.value })
-        this.setState({ data: newItem, });
-          //this.props.setNewPerson(this.state.user);
-    }
-    handleDateChange(event){
-    let data = this.state.data
-    let newItem = Object.assign(data, { date: event.target.value })
-    this.setState({ data: newItem });
+    setNewData = (data) => {
+       this.setState({
+           dates:data
+       })
+        console.log("setNewDATA");
+        console.log("Параметр функции",data);
+        console.log("Текущий стейт",this.state.dates);
     }
 
-    handleCommentChange(event) {
-        let data = this.state.data
-        let newItem = Object.assign(data, { comment: event.target.value })
-        this.setState({ data: newItem });
-    }
-
-    async buttonClickHandler() {
-        console.log("click")
-        let data = this.state.data 
-        const response = await fetch("RouteArchives",{
+    buttonClickHandler =()=> {
+        console.log("Медот Buttonclick", this.state.dates);
+        fetch("RouteArchives", {
             method: 'POST',
-            body: data,
-        });
+            body: this.state.dates,
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.props.history.push("RouteArchives");
+            })
     }
     render() {
         return (
@@ -215,7 +206,7 @@ export class Home extends Component {
                 <div className="content">
                     <p>
                         Точки маршрута:
-            <ul id="routePoint"></ul>
+                          <ul id="routePoint"></ul>
                     </p>
                     <div className="length">
                         <p id="output"></p>
@@ -225,19 +216,10 @@ export class Home extends Component {
                     </div>
                 
                 </div>
-                <form className="form">
-                    <label>Введите название маршрута:</label>
-                    <input type="text" required value={this.state.name}
-                        onChange={this.handleNameChange} />
-                    <label>Дата маршрута:</label>
-                    <input type="text" required value={this.state.date}
-                        onChange={this.handleDateChange} />
-                    <label>Примечания:</label>
-                    <input type="text" required value={this.state.comment}
-                        onChange={this.handleCommentChange}/>
-                    <button onClick={this.buttonClickHandler}>Сохранить маршрут</button>
-                </form>
-
+                {console.log("Метод return",this.state.dates)}
+                <Form setNewData={this.setNewData} />
+                <button onClick={this.buttonClickHandler}>Сохранить маршрут</button> 
+                {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
                     {/* Можно прописать load: "package.full" */}
