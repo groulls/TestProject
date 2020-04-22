@@ -8,17 +8,30 @@ using System;
 
 namespace TEST.Data
 {
-    public class ApplicationDbContext : DbContext //ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-        {
-        }
-
+  
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)//base(options, operationalStoreOptions)
+            IOptions<OperationalStoreOptions> operationalStoreOptions) :base(options, operationalStoreOptions)
         {
         }
-        public virtual DbSet<RouteArchive> RouteArchive { get; set; }
+        public DbSet<RouteArchive> RouteArchive { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    var rng = new Random();
+        //    base.OnModelCreating(modelBuilder);
+
+        //    modelBuilder.Entity<RouteArchive>().HasData(new RouteArchive
+        //    {
+        //        RouteArchiveId = rng.Next(1,10),
+        //       RouteName = "TEST_NAME",
+        //       dateTime = DateTime.Today,
+        //       RouteComment = "TEST_COMMNET"
+
+
+        //    });
+        //}
     }
 }

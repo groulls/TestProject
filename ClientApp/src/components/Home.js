@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
-import './css/Home.css'
+import './css/Home.css';
+import Form from './InputBox';
+import Button from './Button';
 
 const mapState = {
     center: [55.831903, 37.411961],
@@ -63,8 +65,10 @@ export class Home extends Component {
         super(props);
         this.state = {
             coordinates: [],
-        };
-    }
+            dates: {}
+        }
+    };
+   
 
     setYmaps = (ymaps) => {
         this.setState({ ymaps });
@@ -176,18 +180,46 @@ export class Home extends Component {
                 "Расстояние: " + routeLength + "км.";
         }
     };
+
+    setNewData = (data) => {
+       this.setState({
+           dates:data
+       })
+        console.log("setNewDATA");
+        console.log("Параметр функции",data);
+        console.log("Текущий стейт",this.state.dates);
+    }
+
+    buttonClickHandler =()=> {
+        console.log("Медот Buttonclick", this.state.dates);
+        fetch("RouteArchives", {
+            method: 'POST',
+            body: this.state.dates,
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.props.history.push("RouteArchives");
+            })
+    }
     render() {
         return (
             <div className="base_container">
                 <div className="content">
                     <p>
                         Точки маршрута:
-            <ul id="routePoint"></ul>
+                          <ul id="routePoint"></ul>
                     </p>
                     <div className="length">
                         <p id="output"></p>
                     </div>
+                    <div className="route">
+
+                    </div>
+                
                 </div>
+                {console.log("Метод return",this.state.dates)}
+                <Form setNewData={this.setNewData} />
+                <button onClick={this.buttonClickHandler}>Сохранить маршрут</button> 
+                {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
                     {/* Можно прописать load: "package.full" */}
