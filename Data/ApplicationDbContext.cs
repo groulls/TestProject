@@ -8,14 +8,17 @@ using System;
 
 namespace TEST.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
-    { 
+    public class ApplicationDbContext : DbContext //ApiAuthorizationDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext()
+        {
+        }
 
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)//base(options, operationalStoreOptions)
         {
         }
-        public DbSet<RouteArchive> RouteArchive { get; set; }
+        public virtual DbSet<RouteArchive> RouteArchive { get; set; }
     }
 }
