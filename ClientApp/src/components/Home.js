@@ -190,15 +190,12 @@ export class Home extends Component {
         console.log("Текущий стейт",this.state.dates);
     }
 
-    buttonClickHandler =()=> {
+    async buttonClickHandler () {
         console.log("Медот Buttonclick", this.state.dates);
-        fetch("RouteArchives", {
+        await fetch('RouteArchives', {
             method: 'POST',
-            body: this.state.dates,
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("RouteArchives");
-            })
+            body: JSON.stringify(this.state.dates)
+        })
     }
     render() {
         return (
@@ -218,7 +215,7 @@ export class Home extends Component {
                 </div>
                 {console.log("Метод return",this.state.dates)}
                 <Form setNewData={this.setNewData} />
-                <button onClick={this.buttonClickHandler}>Сохранить маршрут</button> 
+                <button onClick={()=>this.buttonClickHandler()}>Сохранить маршрут</button> 
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">

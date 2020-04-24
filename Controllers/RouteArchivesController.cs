@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,33 +28,38 @@ namespace TEST.Controllers
             return list;
         }
 
-        [HttpGet("{id}")]
-        public RouteArchive getOne(int id)
+        //[HttpGet("{id}")]
+        //public RouteArchive getOne(int id)
+        //{
+        //    if (RouteArchiveExists(id))
+        //    {
+        //        return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+        [HttpPost]
+        [Route("temp")]
+        public HttpResponseMessage create(RouteArchive model)
         {
-            if (RouteArchiveExists(id))
-            {
-                return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
-            }
-            else
-            {
-                return null;
-            }
+            var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+            _context.RouteArchive.Add(model);
+            _context.SaveChanges();
+            return result;
         }
 
-       [HttpPost("add")]
 
-       public RouteArchive Add(RouteArchive model)
+        [HttpPost]
+        [Route("add")]
+       public async Task<ActionResult<RouteArchive>> Create(RouteArchive model)
         {
-            if(model.RouteName != "")
-            {
+           
                 _context.RouteArchive.Add(model);
-                _context.SaveChangesAsync();
-                return model;
-            }
-            else
-            {
-                return null;
-            }
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("Create",model);
+           
         }
 
         private bool RouteArchiveExists(int id)
