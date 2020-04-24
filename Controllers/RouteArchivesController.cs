@@ -11,6 +11,7 @@ namespace TEST.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class RouteArchivesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -40,20 +41,23 @@ namespace TEST.Controllers
             }
         }
 
-       [HttpPost("add")]
-
-       public RouteArchive Add(RouteArchive model)
+       [HttpPost]      
+        public RouteArchive Add(RouteArchive model)
         {
-            if(model.RouteName != "")
-            {
-                _context.RouteArchive.Add(model);
-                _context.SaveChangesAsync();
-                return model;
-            }
-            else
-            {
-                return null;
-            }
+
+            _context.RouteArchive.Add(model);
+            _context.SaveChangesAsync();
+            return model;
+            //if(model.RouteName != "")
+            //{
+            //    _context.RouteArchive.Add(model);
+            //    _context.SaveChangesAsync();
+            //    return model;
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
 
         private bool RouteArchiveExists(int id)

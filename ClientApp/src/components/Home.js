@@ -191,13 +191,16 @@ export class Home extends Component {
     }
 
     buttonClickHandler =()=> {
-        console.log("Медот Buttonclick", this.state.dates);
+      
         fetch("RouteArchives", {
             method: 'POST',
-            body: this.state.dates,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ routeName: "TEST", dateTime: "2012-01-03T00:00:00", commentRoute: "TEST" })
         }).then((response) => response.json())
             .then((responseJson) => {
-                this.props.history.push("RouteArchives");
+                this.props.history.push("RouteArchive");
             })
     }
     render() {
