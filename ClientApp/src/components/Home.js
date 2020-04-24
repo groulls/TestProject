@@ -194,8 +194,14 @@ export class Home extends Component {
         console.log("Медот Buttonclick", this.state.dates);
         await fetch('RouteArchives', {
             method: 'POST',
-            body: JSON.stringify(this.state.dates)
-        })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ routeName: "TEST", dateTime: "2012-01-03T00:00:00", commentRoute: "TEST" })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.props.history.push("RouteArchive");
+            })
     }
     render() {
         return (

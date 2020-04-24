@@ -12,6 +12,7 @@ namespace TEST.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class RouteArchivesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -52,7 +53,7 @@ namespace TEST.Controllers
 
 
         [HttpPost]
-        [Route("add")]
+      
        public async Task<ActionResult<RouteArchive>> Create(RouteArchive model)
         {
            
