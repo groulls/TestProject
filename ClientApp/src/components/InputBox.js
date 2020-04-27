@@ -4,8 +4,7 @@ class InputBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            coordinates: [],
-            data: { name: '', date: '', comment: '' }
+             data: { routeName: '', dateTime: '', routeComment: '' }
         }
 
             this.handleNameChange = this.handleNameChange.bind(this);
@@ -15,20 +14,20 @@ class InputBox extends Component {
      
         handleNameChange(event) {
             let data = this.state.data
-            let newItem = Object.assign(data, { name: event.target.value })
+            let newItem = Object.assign(data, { routeName: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
         handleDateChange(event){
             let data = this.state.data
-            let newItem = Object.assign(data, { date: event.target.value })
+            let newItem = Object.assign(data, { dateTime: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
 
         handleCommentChange(event) {
             let data = this.state.data
-            let newItem = Object.assign(data, { comment: event.target.value })
+            let newItem = Object.assign(data, { routeComment: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
@@ -42,7 +41,7 @@ class InputBox extends Component {
                             <input type="text" required value={this.state.name}
                                 onChange={this.handleNameChange} />
                             <label>Дата маршрута:</label>
-                            <input type="text" required value={this.state.date}
+                            <input type="datetime-local" required value={this.state.date}
                                 onChange={this.handleDateChange} />
                             <label>Примечания:</label>
                             <input type="text" required value={this.state.comment}

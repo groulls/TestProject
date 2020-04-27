@@ -46,8 +46,9 @@ namespace TEST.Controllers
         {
 
             _context.RouteArchive.Add(model);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
             return model;
+           
             //if(model.RouteName != "")
             //{
             //    _context.RouteArchive.Add(model);
