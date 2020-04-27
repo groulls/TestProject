@@ -43,12 +43,12 @@ namespace TEST.Controllers
         }
 
        [HttpPost]      
-        public RouteArchive Add(RouteArchive model)
+        public async Task<ActionResult<RouteArchive>> Add(RouteArchive model)
         {
 
             _context.RouteArchive.Add(model);
-            _context.SaveChanges();
-            return model;
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("Create",model);
            
             //if(model.RouteName != "")
             //{

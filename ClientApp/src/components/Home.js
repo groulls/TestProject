@@ -190,14 +190,14 @@ export class Home extends Component {
         console.log("Текущий стейт",this.state.dates);
     }
 
-    buttonClickHandler =() =>{
+    async buttonClickHandler() {
       
-        fetch("RouteArchives", {
+        await fetch("RouteArchives", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.dates )
+            body: JSON.stringify(this.state.dates)
         }).then((response) => {
             console.log(response);
             if (response.status >= 200 && response.status < 300) {
@@ -226,7 +226,7 @@ export class Home extends Component {
                 </div>
                 {console.log("Метод return",this.state.dates)}
                 <Form setNewData={this.setNewData} />
-                <button onClick={this.buttonClickHandler}>Сохранить маршрут</button> 
+                <button onClick={()=>this.buttonClickHandler()}>Сохранить маршрут</button> 
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
