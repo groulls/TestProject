@@ -41,20 +41,20 @@ namespace TEST.Controllers
         //        return null;
         //    }
         //}
-        [HttpPost]
-        [Route("temp")]
-        public HttpResponseMessage create(RouteArchive model)
-        {
-            var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            _context.RouteArchive.Add(model);
-            _context.SaveChanges();
-            return result;
-        }
+        //[HttpPost]
+        //[Route("temp")]
+        //public HttpResponseMessage Add(RouteArchive model)
+        //{
+        //    var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        //    _context.RouteArchive.Add(model);
+        //    _context.SaveChanges();
+        //    return result;
+        //}
 
 
         [HttpPost]
       
-       public async Task<ActionResult<RouteArchive>> Create(RouteArchive model)
+       public async Task<ActionResult<RouteArchive>> Create([FromBody]RouteArchive model)
         {
            
                 _context.RouteArchive.Add(model);
