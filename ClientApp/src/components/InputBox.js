@@ -5,7 +5,7 @@ class InputBox extends Component {
         super(props);
         this.state = {
             coordinates: [],
-            data: { name: '', date: '', comment: '' }
+            data: { RouteName: '', DateTime: '', RouteComment: '' }
         }
 
             this.handleNameChange = this.handleNameChange.bind(this);
@@ -15,20 +15,20 @@ class InputBox extends Component {
      
         handleNameChange(event) {
             let data = this.state.data
-            let newItem = Object.assign(data, { name: event.target.value })
+            let newItem = Object.assign(data, { RouteName: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
         handleDateChange(event){
             let data = this.state.data
-            let newItem = Object.assign(data, { date: event.target.value })
+            let newItem = Object.assign(data, { DateTime: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
 
         handleCommentChange(event) {
             let data = this.state.data
-            let newItem = Object.assign(data, { comment: event.target.value })
+            let newItem = Object.assign(data, { RouteComment: event.target.value })
             this.setState({ data: newItem });
             this.props.setNewData(this.state.data);
         }
