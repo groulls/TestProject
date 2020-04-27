@@ -29,37 +29,26 @@ namespace TEST.Controllers
             return list;
         }
 
-        //[HttpGet("{id}")]
-        //public RouteArchive getOne(int id)
-        //{
-        //    if (RouteArchiveExists(id))
-        //    {
-        //        return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
-        //[HttpPost]
-        //[Route("temp")]
-        //public HttpResponseMessage Add(RouteArchive model)
-        //{
-        //    var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-        //    _context.RouteArchive.Add(model);
-        //    _context.SaveChanges();
-        //    return result;
-        //}
-
-
-        [HttpPost]
-      
-       public async Task<ActionResult<RouteArchive>> Create([FromBody]RouteArchive model)
+        [HttpGet("{id}")]
+        public RouteArchive getOne(int id)
         {
-           
-                _context.RouteArchive.Add(model);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction("Create",model);
+            if (RouteArchiveExists(id))
+            {
+                return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+       [HttpPost]      
+        public async Task<ActionResult<RouteArchive>> Add(RouteArchive model)
+        {
+
+            _context.RouteArchive.Add(model);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("Create",model);
            
         }
 

@@ -190,19 +190,23 @@ export class Home extends Component {
         console.log("Текущий стейт",this.state.dates);
     }
 
-
-    buttonClickHandler = () => {
-
-        fetch("RouteArchives", {
+    async buttonClickHandler() {
+      
+        await fetch("RouteArchives", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ routeName: "TEST", dateTime: "2012-01-03T00:00:00", commentRoute: "TEST" })
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("RouteArchive");
-            })
+            body: JSON.stringify(this.state.dates)
+        }).then((response) => {
+            console.log(response);
+            if (response.status >= 200 && response.status < 300) {
+                response.json();
+            } else { alert('False') }
+        } )
+            //.then((responseJson) => {
+            //    this.props.history.push("RouteArchive");
+            //})
     }
 
     render() {
@@ -223,7 +227,7 @@ export class Home extends Component {
                 </div>
                 {console.log("Метод return",this.state.dates)}
                 <Form setNewData={this.setNewData} />
-                <button onClick={this.buttonClickHandler}>Сохранить маршрут</button> 
+                <button onClick={()=>this.buttonClickHandler()}>Сохранить маршрут</button> 
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
