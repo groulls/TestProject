@@ -208,6 +208,7 @@ export class Home extends Component {
             //    this.props.history.push("RouteArchive");
             //})
     }
+
     render() {
         return (
             <div className="base_container">

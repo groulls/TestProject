@@ -50,16 +50,6 @@ namespace TEST.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction("Create",model);
            
-            //if(model.RouteName != "")
-            //{
-            //    _context.RouteArchive.Add(model);
-            //    _context.SaveChangesAsync();
-            //    return model;
-            //}
-            //else
-            //{
-            //    return null;
-            //}
         }
 
         private bool RouteArchiveExists(int id)
