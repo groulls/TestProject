@@ -1,17 +1,19 @@
 ﻿import React, { Component } from 'react';
+import Filter from './Filter'
 
 export class Test extends Component {
     static displayName = Test.name;
 
     constructor(props) {
         super(props);
-        this.state = { data: [], loading: true };
+        this.state = { data: [], loading: true, filter:'', filt:true};
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.populateWeatherData();
     }
 
+   
     static renderForecastsTable(data) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
@@ -30,20 +32,53 @@ export class Test extends Component {
                             <td>{item.routeComment}</td>
                         </tr>
                     )}
+                
                 </tbody>
             </table>
         );
+    }
+
+    onHandleFilter = (value) => {
+        this.setState({
+            filter: value
+        })
+    }
+
+    onClickHandler = () => {
+       
+        this.setState({
+            filt:false
+        })
     }
 
     render() {
         let contents = this.state.loading
             ? <p><em>Загрузка...</em></p>
             : Test.renderForecastsTable(this.state.data);
-
-        return (
+        const { data, filter } = this.state;
+        const lowercasedFilter = filter.toLowerCase();
+        const filteredData = data.filter(item => {
+            return Object.keys(item).some(key =>
+                typeof item[key] === 'string' && item[key].toLowerCase().includes(lowercasedFilter)
+            );
+        });
+          return (
             <div>
-                <h1 id="tabelLabel" >Маршруты:</h1>
-                {contents}
+                  <h1 id="tabelLabel" >Маршруты:</h1>
+                  <Filter onHandleFilter={this.onHandleFilter} />
+                  <button onClick={this.onClickHandler}/>
+                  {!this.state.filt?
+                        filteredData.map(item => (
+                            <div key={item.RouteArchiveId}>
+                                <div>
+                                    {item.routeName} - {item.dateTime} - {item.routeComment}
+                                </div>
+                            </div>
+                        ))
+                      :null
+                    } 
+                  {contents}
+                      
             </div>
         );
     }
@@ -52,6 +87,7 @@ export class Test extends Component {
         //const token = await authService.getAccessToken();
         const response = await fetch('RouteArchives');
         const datas = await response.json();
-        this.setState({ data: datas, loading: false });
+        this.setState({ data: datas, loading: false }); 
+      
     }
 }
