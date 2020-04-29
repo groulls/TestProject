@@ -52,9 +52,6 @@ export class Test extends Component {
     }
 
     render() {
-        let contents = this.state.loading
-            ? <p><em>Загрузка...</em></p>
-            : Test.renderForecastsTable(this.state.data);
         const { data, filter } = this.state;
         const lowercasedFilter = filter.toLowerCase();
         const filteredData = data.filter(item => {
@@ -62,12 +59,15 @@ export class Test extends Component {
                 typeof item[key] === 'string' && item[key].toLowerCase().includes(lowercasedFilter)
             );
         });
+        let contents = this.state.loading
+            ? <p><em>Загрузка...</em></p>
+            : Test.renderForecastsTable(filteredData);
           return (
             <div>
                   <h1 id="tabelLabel" >Маршруты:</h1>
                   <Filter onHandleFilter={this.onHandleFilter} />
                   <button onClick={this.onClickHandler}/>
-                  {!this.state.filt?
+                  {/* {!this.state.filt?
                         filteredData.map(item => (
                             <div key={item.RouteArchiveId}>
                                 <div>
@@ -76,7 +76,7 @@ export class Test extends Component {
                             </div>
                         ))
                       :null
-                    } 
+                    }*/} 
                   {contents}
                       
             </div>
