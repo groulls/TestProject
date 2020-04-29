@@ -219,13 +219,8 @@ export class Home extends Component {
                     </p>
                     <div className="length">
                         <p id="output"></p>
-                    </div>
-                    <div className="route">
-
-                    </div>
-                
+                    </div>               
                 </div>
-                {console.log("Метод return",this.state.dates)}
                 <Form setNewData={this.setNewData} />
                 <button onClick={()=>this.buttonClickHandler()}>Сохранить маршрут</button> 
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
