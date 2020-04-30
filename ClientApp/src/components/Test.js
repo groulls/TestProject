@@ -1,12 +1,13 @@
 ﻿import React, { Component } from 'react';
 import Filter from './Filter'
+import authService from './api-authorization/AuthorizeService'
 
 export class Test extends Component {
     static displayName = Test.name;
 
     constructor(props) {
         super(props);
-        this.state = { data: [], loading: true, filter:'', filt:true};
+        this.state = { data: [], loading: true, filter:''};
     }
 
     componentWillMount() {
@@ -20,13 +21,13 @@ export class Test extends Component {
                 <thead>
                     <tr>
                         <th>Наименование маршрута</th>
-                        <th>Дата начала</th>
+                        <th>Дата создания</th>
                         <th>Комментарии</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map(item =>
-                        <tr>
+                        <tr key={item.routeArchiveId}>
                             <td>{item.routeName}</td>
                             <td>{item.dateTime}</td>
                             <td>{item.routeComment}</td>
@@ -41,13 +42,6 @@ export class Test extends Component {
     onHandleFilter = (value) => {
         this.setState({
             filter: value
-        })
-    }
-
-    onClickHandler = () => {
-       
-        this.setState({
-            filt:false
         })
     }
 
@@ -66,17 +60,6 @@ export class Test extends Component {
             <div>
                   <h1 id="tabelLabel" >Маршруты:</h1>
                   <Filter onHandleFilter={this.onHandleFilter} />
-                  <button onClick={this.onClickHandler}/>
-                  {/* {!this.state.filt?
-                        filteredData.map(item => (
-                            <div key={item.RouteArchiveId}>
-                                <div>
-                                    {item.routeName} - {item.dateTime} - {item.routeComment}
-                                </div>
-                            </div>
-                        ))
-                      :null
-                    }*/} 
                   {contents}
                       
             </div>
@@ -84,8 +67,10 @@ export class Test extends Component {
     }
 
     async populateWeatherData() {
-        //const token = await authService.getAccessToken();
-        const response = await fetch('RouteArchives');
+        const token = await authService.getAccessToken();
+        const response = await fetch('RouteArchives', {
+            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+        });
         const datas = await response.json();
         this.setState({ data: datas, loading: false }); 
       

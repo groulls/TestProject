@@ -5,6 +5,7 @@
 
 .content {
     float: left;
+    display: inline-block;
 }
 
 .content p {

@@ -69,11 +69,7 @@ export class Home extends Component {
         }
     };
    
-
-    setYmaps = (ymaps) => {
-        this.setState({ ymaps });
-    };
-
+    //Функция для получения координат по наименованию или адресу объекта
     geocode(ymaps) {
         geoplace.map((geo, index) => {
             const temp = ymaps.geocode(geo);
@@ -185,9 +181,6 @@ export class Home extends Component {
        this.setState({
            dates:data
        })
-        console.log("setNewDATA");
-        console.log("Параметр функции",data);
-        console.log("Текущий стейт",this.state.dates);
     }
 
     async buttonClickHandler() {
@@ -219,10 +212,11 @@ export class Home extends Component {
                     </p>
                     <div className="length">
                         <p id="output"></p>
-                    </div>               
+                    </div>
+                    <Form setNewData={this.setNewData} />
+                    <button onClick={() => this.buttonClickHandler()}>Сохранить маршрут</button> 
                 </div>
-                <Form setNewData={this.setNewData} />
-                <button onClick={()=>this.buttonClickHandler()}>Сохранить маршрут</button> 
+
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
