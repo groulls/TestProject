@@ -65,8 +65,11 @@ export class Home extends Component {
         super(props);
         this.state = {
             coordinates: [],
-            dates: {}
+            dates: {},
+            COORD: {
+                "XZ": [55.775724, 37.56084], "PZ": [55.780898, 37.642889]}
         }
+       
     };
    
     //Функция для получения координат по наименованию или адресу объекта
@@ -95,21 +98,23 @@ export class Home extends Component {
                 }
             );
             mapRef.current.geoObjects.add(polyline);
-
+            var COORDS = this.state.COORD
+            
             // Создание и добавление на карту коллекции транзитных точек
             var routeMidPointsCollection = new ymaps.GeoObjectCollection(null, {
                 preset: midPointsUnchecked,
                 draggable: false,
             });
-            for (var item in routeMidPoints) {
+            for (var item in COORDS) {
                 routeMidPointsCollection.add(
-                    new ymaps.Placemark(routeMidPoints[item], { hintContent: item })
+                    new ymaps.Placemark(COORDS[item], { hintContent: item })
                 );
             }
             mapRef.current.geoObjects.add(routeMidPointsCollection);
 
             // Работа с конечными точками при создании маршрута
             routeMidPointsCollection.events.add("click", function (e) {
+         
                 var currentPoint = e.get("target").options.get("preset");
                 var currentPointCoords = e.get("target").geometry._coordinates;
                 var routePoints = document.getElementById("routePoint");
@@ -128,8 +133,8 @@ export class Home extends Component {
                         polyline.geometry.get(polyline.geometry.getLength() - 1) !==
                         currentPointCoords
                     ) {
-                        for (item in routeMidPoints) {
-                            if (currentPointCoords == routeMidPoints[item]) {
+                        for (item in COORDS) {
+                            if (currentPointCoords == COORDS[item]) {
                                 polyline.geometry.insert(
                                     polyline.geometry.getLength(),
                                     currentPointCoords
@@ -151,8 +156,8 @@ export class Home extends Component {
                     ) {
                         e.get("target").options.set("preset", midPointsUnchecked);
 
-                        for (item in routeMidPoints) {
-                            if (currentPointCoords == routeMidPoints[item]) {
+                        for (item in COORDS) {
+                            if (currentPointCoords == COORDS[item]) {
                                 // Удаление кликнутой конечной точки из полилинии
                                 polyline.geometry.remove(polyline.geometry.getLength() - 1);
                                 routePoints.removeChild(routePoints.lastChild);
@@ -212,11 +217,12 @@ export class Home extends Component {
                     </p>
                     <div className="length">
                         <p id="output"></p>
-                    </div>
+                    </div>  
+
                     <Form setNewData={this.setNewData} />
                     <button onClick={() => this.buttonClickHandler()}>Сохранить маршрут</button> 
                 </div>
-
+             
                 {/*<Button buttonClickHandler={this.buttonClickHandler}/>*/}
 
                 <div className="Mappy">
