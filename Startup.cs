@@ -47,8 +47,7 @@ namespace TEST
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-
+      
             //services.AddTransient<RouteArchive>();
         }
 

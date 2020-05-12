@@ -6,6 +6,7 @@
 .content {
     float: left;
     display: inline-block;
+    width:300px
 }
 
 .content p {
@@ -23,4 +24,27 @@
     float: right;
     border-left: greenyellow solid 5px;
     width: 650px;
+  }
+
+.btn {
+    font-size: 21px;
+    padding: 5px 20px;
+    border: 0;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 3px;
+    transition: all 250ms ease-in-out;
+    cursor: pointer;
+    margin-bottom:5px;
+    &:hover
+
+{
+    background-color: #2386c8;
 }
+
+&:focus {
+    outline: none;
+}
+}
+
+

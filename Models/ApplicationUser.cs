@@ -8,5 +8,7 @@ namespace TEST.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+        public virtual ICollection<RouteArchive> RouteArchives { get; set; }
     }
 }

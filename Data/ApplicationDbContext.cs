@@ -17,6 +17,7 @@ namespace TEST.Data
         {
         }
         public DbSet<RouteArchive> RouteArchive { get; set; }
+        public DbSet<TEST.Models.Coordinates> Coordinates { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

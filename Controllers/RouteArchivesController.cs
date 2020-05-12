@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TEST.Data;
@@ -25,21 +27,21 @@ namespace TEST.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RouteArchive>>> GetRouteArchive()
         {
-            var list = await _context.RouteArchive.ToListAsync();
-            return list;
-        }
 
-        [HttpGet("{id}")]
-        public RouteArchive getOne(int id)
-        {
-            if (RouteArchiveExists(id))
+            //string userid = User.GetSubjectId();
+            var subjectId = HttpContext.User.Identity.GetAuthenticationMethods().Count() > 0 ? HttpContext.User.Identity.GetSubjectId() : "";
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+         
+            if (!string.IsNullOrEmpty(userId))
             {
-                return _context.RouteArchive.Where(r => r.RouteArchiveId == id).FirstOrDefault();  
+                return await _context.RouteArchive.Where(x => x.UserId == userId).ToListAsync();
             }
             else
             {
                 return null;
             }
+            //var list = await _context.RouteArchive.ToListAsync();
+            //return list;
         }
 
        [HttpPost]      

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TEST.Data;
 
 namespace TEST.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200430095943_Coordinates")]
+    partial class Coordinates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,11 +310,11 @@ namespace TEST.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CoordX")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("CoordX")
+                        .HasColumnType("float");
 
-                    b.Property<string>("CoordY")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("CoordY")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -335,15 +337,10 @@ namespace TEST.Data.Migrations
                     b.Property<string>("RouteName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("RouteArchiveId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("RouteArchive");
                 });
@@ -397,13 +394,6 @@ namespace TEST.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TEST.Models.RouteArchive", b =>
-                {
-                    b.HasOne("TEST.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("RouteArchives")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
